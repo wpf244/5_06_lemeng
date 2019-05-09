@@ -35,7 +35,7 @@ class BaseHome extends Controller
                 ];
                 echo \json_encode($arrs);exit;
              }else{
-                 if($user['status'] == 0 || $user['is_delete'] == -1){
+                 if($user['is_delete'] == -1){
                     $arrs=[
                         'error_code'=>502,
                         'msg'=>"登录信息已失效",
