@@ -147,6 +147,27 @@ class Index extends BaseHome
         echo \json_encode($arr);
 
     }
+    public function up()
+    {
+        $re=db("lb")->field("desc")->where(["fid"=>5,"status"=>1])->find();
+        if($re){
+            $re['desc']=strip_tags($re['desc']);
+            $arr=[
+                'error_code'=>0,
+                'msg'=>'获取成功',
+                'data'=>$re
+            ];
+        }else{
+            $arr=[
+                'error_code'=>1,
+                'msg'=>'暂无数据',
+                'data'=>[]
+            ];
+        }
+        echo \json_encode($arr);
+
+
+    }
 
 
 

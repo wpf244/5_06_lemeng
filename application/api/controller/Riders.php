@@ -26,6 +26,8 @@ class Riders extends BaseHome
 
             $shop=db("shop")->where(["id"=>$v['sid'],"is_delete"=>0])->find();
 
+         //   var_dump($v['sid']);exit;
+
             $refit[$k]['logo']=$url.$shop['logo'];
             $refit[$k]['shopname']=$shop['name'];
 
@@ -74,6 +76,7 @@ class Riders extends BaseHome
             'data'=>[
                 'refit'=>$refit,
                 'parts'=>$parts,
+               
             ]
         ];
         echo \json_encode($arr);
