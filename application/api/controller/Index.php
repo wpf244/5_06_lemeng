@@ -149,9 +149,11 @@ class Index extends BaseHome
     }
     public function up()
     {
-        $re=db("lb")->field("desc")->where(["fid"=>5,"status"=>1])->find();
+        $re=db("lb")->field("desc,image")->where(["fid"=>5,"status"=>1])->find();
         if($re){
+            $url=parent::getUrl();
             $re['desc']=strip_tags($re['desc']);
+            $re['image']=$url.$re['image'];
             $arr=[
                 'error_code'=>0,
                 'msg'=>'获取成功',
@@ -167,6 +169,60 @@ class Index extends BaseHome
         echo \json_encode($arr);
 
 
+    }
+    /**
+    * 云商
+    *
+    * @return void
+    */
+    public function say()
+    {
+        $res=db("say")->field("id,name")->where("status",1)->order(["sort asc","id desc"])->select();
+
+        if($res){
+            $arr=[
+                'error_code'=>0,
+                'msg'=>'获取成功',
+                'data'=>$res
+            ];
+        }else{
+            $arr=[
+                'error_code'=>1,
+                'msg'=>'暂无数据',
+                'data'=>[]
+            ];
+        }
+        echo \json_encode($arr);
+    }
+    /**
+    * 产品详情
+    *
+    * @return void
+    */
+    public function say_detail()
+    {
+        $id=input("id");
+
+        $res=db("say_img")->field("image")->where(["rid"=>$id,"status"=>1])->select();
+
+        if($res){
+            $url=parent::getUrl();
+            foreach($res as $k => $v){
+                $res[$k]['image']=$url.$v['image'];
+            }
+            $arr=[
+                'error_code'=>0,
+                'msg'=>'获取成功',
+                'data'=>$res
+            ];
+        }else{
+            $arr=[
+                'error_code'=>1,
+                'msg'=>'暂无数据',
+                'data'=>[]
+            ];
+        }
+        echo \json_encode($arr);
     }
 
 
